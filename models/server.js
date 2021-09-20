@@ -9,6 +9,7 @@ class Server
     {
         this.app = express();
         this.port = process.env.PORT;
+        this.pathAuth = '/api/auth';
 
         this.dbconecction();
     }
@@ -16,6 +17,11 @@ class Server
     async dbconecction()
     {
         await dbConnection;
+    }
+
+    routes()
+    {
+        this.app.use(this.pathAuth,require('../routes/auth'));
     }
 
     listen()
