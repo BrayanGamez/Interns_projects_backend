@@ -10,18 +10,33 @@ class Server
         this.app = express();
         this.port = process.env.PORT;
         this.pathAuth = '/api/auth';
+        this.pathScholars = '/api/scholars'
 
         this.dbconecction();
+        this.middlewares();
+        this.routes();
     }
 
     async dbconecction()
     {
-        await dbConnection;
+        await dbConnection();
     }
+
+    middlewares()
+    {
+        //cors
+        this.app.use(cors());
+        //Lectura y parseo
+        this.app.use(express.json());
+        //directorio publico
+/*         this.app.use(express.static('public')); */
+    }
+
 
     routes()
     {
-        this.app.use(this.pathAuth,require('../routes/auth'));
+/*         this.app.use(this.pathAuth,require('../routes/auth')); */
+        this.app.use(this.pathScholars,require('../routes/scholars'));
     }
 
     listen()
