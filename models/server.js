@@ -26,7 +26,7 @@ class Server
     middlewares()
     {
         //cors
-        this.app.use(cors({origin:'https://rest-server-dps-api.herokuapp.com'}));
+        this.app.use(cors({origin:'*'}));
         //Lectura y parseo
         this.app.use(express.json());
         this.app.use(express.static('public'));
