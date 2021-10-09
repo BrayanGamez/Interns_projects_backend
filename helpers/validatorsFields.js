@@ -28,6 +28,14 @@ check('idCarrera','No es un objeto de mongo').isMongoId(),
 check('idUniversidad','No es un objeto de mongo').isMongoId()]
 ;
 
+const EmptyFieldsUniversities = [check('nombre','Campo nombre vacio').not().isEmpty(),
+check('nombre','No debe ser mayor a 50 caracteres').isLength({max:50}),
+check('direccion','Campo direccion vacio').not().isEmpty(),
+check('direccion','No debe ser mayor a 100 caracteres').isLength({max:100}),
+check('correo','Campo de correo invalido').not().isEmpty(),
+check('correo','formato de correo invalido').isEmail(),
+check('telefono','numero de telefono supera 20 caracteres').isLength({max:20})];
+
 const userExist = async(id)=>
 {
     const existUser = await Scholar.findById(id);
@@ -37,4 +45,4 @@ const userExist = async(id)=>
     }
 }
 
-module.exports = {EmptyFieldsScholars,ageRange,userExist}
+module.exports = {EmptyFieldsScholars,ageRange,userExist,EmptyFieldsUniversities}

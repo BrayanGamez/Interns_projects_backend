@@ -10,7 +10,8 @@ class Server
         this.app = express();
         this.port = process.env.PORT;
         this.pathAuth = '/api/auth';
-        this.pathScholars = '/api/scholars'
+        this.pathScholars = '/api/scholars';
+        this.pathUniversities = '/api/universities';
 
         this.dbconecction();
         this.middlewares();
@@ -37,6 +38,7 @@ class Server
     {
 /*         this.app.use(this.pathAuth,require('../routes/auth')); */
         this.app.use(this.pathScholars,require('../routes/scholars'));
+        this.app.use(this.pathUniversities,require('../routes/university'))
     }
 
     listen()

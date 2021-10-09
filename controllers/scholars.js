@@ -3,6 +3,18 @@ const bcryptjs = require('bcryptjs');
 const mongoose = require('mongoose');
 const Scholar = require('../models/scholar');
 
+const controllerGet = async(req=request,res=response)=>
+{
+    const {limite=5,desde=0} = req.query;
+    const queryUserTrue = {status:true};
+
+    const [Total,Scholars] =  await Promise.all([
+        Scholar.countDocuments(queryUserTrue),
+        Scholar.find(queryUserTrue).skip(Number(desde)).limit(Number(limite))   
+    ]);
+
+    res.json({Total,Scholars});
+}
 
 const controllerPost = async(req=request,res=response)=>
 {
@@ -69,4 +81,4 @@ const controllerDelete = async(req=request,res=response)=>
     const scholar = await Scholar.findByIdAndUpdate(id,{status:false});
     res.json(scholar);
 }
-module.exports = {controllerPost,controllerPut,controllerDelete};
+module.exports = {controllerPost,controllerPut,controllerDelete,controllerGet};
