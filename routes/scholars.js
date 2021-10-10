@@ -26,7 +26,8 @@ router.put('/:id',[
 ],validarCampos,controllerPut)
 
 router.delete('/:id',[
-    check('id','No es id de mongo').isMongoId()
+    check('id','No es id de mongo').isMongoId(),
+    check('id').custom(userExist)
 ],validarCampos,controllerDelete)
 
 module.exports = router;
