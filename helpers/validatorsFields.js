@@ -38,12 +38,6 @@ check('correo','Campo de correo invalido').not().isEmpty(),
 check('correo','formato de correo invalido').isEmail(),
 check('telefono','numero de telefono supera 20 caracteres').isLength({max:20})];
 
-const EmptyFieldsCarees = [
-    check('nombre','Campo nombre vacio').not().isEmpty(),
-    check('pensum','Campo pensum vacio').not().isEmpty(),
-    check('ciclos','No es numerico').isNumeric(),
-    check('IdUniversidad','No es un id de mongo').isMongoId()
-]
 
 const userExist = async(id)=>
 {
@@ -87,6 +81,5 @@ module.exports = {
     EmptyFieldsUniversities,
     careerExist,
     universityExist,
-    isUrlValidate,
-    EmptyFieldsCarees
+    isUrlValidate
 }

@@ -22,6 +22,15 @@ const controllerPost = async(req=request,res=response)=>
     })};
 
     const {nombre,pensum,ciclos,IdUniversidad} = req.body;
+    if(!nombre||!pensum||!ciclos||!IdUniversidad){return res.status(400).json({
+        msg:'Campos vacios'
+    })};
+
+    const regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+    
+    if(!regexp.test(pensum)){return res.status(400).json({
+        msg:'URL Invalida'
+    })};
 
     const idUniversidad = new mongoose.Types.ObjectId(IdUniversidad);
     const career = new Career({nombre,pensum,ciclos,idUniversidad});
