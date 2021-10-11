@@ -26,8 +26,8 @@ check('direccion','campo de direccion vacio').not().isEmpty(),
 check('correo','campo de correo vacio').not().isEmpty(),
 check('correo','Formato de correo no valido').isEmail(),
 check('telefono','campo de telefono vacio').not().isEmpty(),
-check('idCarrera','No es un objeto de mongo').isMongoId(),
-check('idUniversidad','No es un objeto de mongo').isMongoId()]
+check('IdCarrera','No es un objeto de mongo').isMongoId(),
+check('IdUniversidad','No es un objeto de mongo').isMongoId()]
 ;
 
 const EmptyFieldsUniversities = [check('nombre','Campo nombre vacio').not().isEmpty(),
