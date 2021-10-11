@@ -8,7 +8,7 @@ const {
     controllerPut,
     controllerDelete} = require('../controllers/university');
 
-const {EmptyFieldsUniversities,existUniversity} = require('../helpers/validatorsFields');
+const {EmptyFieldsUniversities,universityExist} = require('../helpers/validatorsFields');
 
 router.get('/',controllerGet);
 
@@ -17,12 +17,12 @@ router.post('/',[...EmptyFieldsUniversities,validarCampos],controllerPost);
 router.put('/:id',[
     ...EmptyFieldsUniversities,
     check('id','No es un id de mongo').isMongoId(),
-    check('id').custom(existUniversity)
+    check('id').custom(universityExist)
 ],validarCampos,controllerPut);
 
 router.delete('/:id',[
     check('id','No es un id de mongo').isMongoId(),
-    check('id').custom(existUniversity)
+    check('id').custom(universityExist)
 ]
 ,validarCampos,controllerDelete);
 
