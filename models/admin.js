@@ -5,8 +5,10 @@ const adminSchema = new Schema({
     password:String,
     nombre:String,
     apellido:String,
-    correo:{type:String,maxlength:30},
-    telefono:{type:String,maxlength:12}
+    rol:{type:String,default:'Admin'},
+    status:{type:Boolean,default:true},
+    correo:{type:String,maxlength:30,unique:true},
+    telefono:{type:String,maxlength:25}
 });
 
 module.exports = model('admin',adminSchema);

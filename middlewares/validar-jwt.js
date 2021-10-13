@@ -1,6 +1,7 @@
 const {response, request} = require('express');
 const jwt = require('jsonwebtoken');
-const Usuario = require('../models/usuario');
+const Scholar = require('../models/scholar');
+const Admin = require('../models/admin');
 
 const validarJWT = async(req=request,res=response,next)=>
 {
@@ -13,23 +14,32 @@ const validarJWT = async(req=request,res=response,next)=>
     }
 
     try {
-      const {uid} =  jwt.verify(token,process.env.SECRETPRIVATEKEY);
-      const usuario = await Usuario.findById(uid);
+      const {_id} =  jwt.verify(token,process.env.SECRETPRIVATEKEY);
+      const scholar = await Scholar.findById(_id);
+      const admin = await Admin.findById(_id);
 
-      if(!usuario)
+      if(!scholar&&!admin)
       {
         return res.status(401).json({
             msg:'Token no valido - Usuario no disponible'
         })
       }
 
-      if(!usuario.estado)
+      if(!scholar.status&&!admin.status)
       {
           return res.status(401).json({
               msg:'Token no valido - Usuario no disponible'
           })
       }
-      req.usuario = usuario;
+      
+      if(!scholar)
+      {
+          req.usuario = admin;
+      }
+      else
+      {
+          req.usuario = scholar;
+      }
 
     } catch (error) {
         console.log(error);

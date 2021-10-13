@@ -4,9 +4,59 @@ const Scholar = require('../models/scholar');
 const bcryptjs = require('bcryptjs');
 const {generarJWT}=require('../helpers/generarJWT');
 
-const controllerPost = async()=>
+const controllerPost = async(req=request,res=response)=>
 {
+    const {correo,password} = req.body;
+    try {
+        const scholar = await Scholar.findOne({correo});
+        if(scholar)
+        {
+            if(scholar.status)
+            {
+                const validPassword = bcryptjs.compareSync(password,scholar.password);
+                if(!validPassword)
+                {
+                    return res.status(400).json({
+                        msg:"Error Usuario/Contrasena - contra incorrecta"
+                    });
+                    const token = await generarJWT(usuario.id);
+                    res.json({
+                    msg:'Login ok!',
+                    scholar,
+                    token
+                           });
+                }
+            }
+        }
+        else
+        {
+            const admin = await Admin.findOne({correo});
+            if(!admin)
+            {
+                return res.status(400).json({
+                    msg:"Error Usuario/Contrasena"
+                });
+            }
+            const validPassword = bcryptjs.compareSync(password,admin.password);
+            if(!validPassword)
+            {
+            return res.status(400).json({
+            msg:"Error Usuario/Contrasena - contra incorrecta"
+            }); 
+            }
 
+            const token = await generarJWT(usuario.id);
+                    res.json({
+                    msg:'Login ok!',
+                    scholar,
+                    token
+                           });
+
+        }
+    } catch (error) {
+        console.log(error);
+        
+    }
 }
 
 module.exports = controllerPost;

@@ -8,6 +8,8 @@ controllerDelete,
 controllerGet} = require('../controllers/scholars');
 const {EmptyFieldsScholars,ageRange,userExist} = require('../helpers/validatorsFields')
 const {validarCampos}= require('../middlewares/validateFields');
+const esAdminRole = require('../middlewares/validate-rol');
+const {validarJWT} = require('../middlewares/validar-jwt');
 
 router.get('/',[
     check('desde').isNumeric(),
@@ -16,7 +18,8 @@ router.get('/',[
 
 router.post('/',
 [
-...EmptyFieldsScholars,
+...EmptyFieldsScholars,validarJWT,
+esAdminRole,
 check('edad').custom(ageRange)
 ],validarCampos,controllerPost)
 

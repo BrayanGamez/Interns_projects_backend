@@ -13,6 +13,8 @@ class Server
         this.pathScholars = '/api/scholars';
         this.pathUniversities = '/api/universities';
         this.pathCareers = '/api/careers';
+        this.pathAuth = '/api/auth';
+        this.pathAdmin = '/api/admin';
 
         this.dbconecction();
         this.middlewares();
@@ -36,10 +38,11 @@ class Server
 
     routes()
     {
-/*         this.app.use(this.pathAuth,require('../routes/auth')); */
+        this.app.use(this.pathAuth,require('../routes/auth')); 
         this.app.use(this.pathScholars,require('../routes/scholars'));
         this.app.use(this.pathUniversities,require('../routes/university'));
         this.app.use(this.pathCareers,require('../routes/career'))
+        this.app.use(this.pathAdmin,require('../routes/admins'));
     }
 
     listen()

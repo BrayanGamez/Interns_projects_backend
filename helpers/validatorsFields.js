@@ -2,6 +2,7 @@ const {check} = require('express-validator');
 const Scholar = require('../models/scholar');
 const University = require('../models/university');
 const Career = require('../models/career');
+const Admin = require('../models/admin');
 
 const ageRange = (edad)=>
 {
