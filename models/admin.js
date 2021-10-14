@@ -11,4 +11,12 @@ const adminSchema = new Schema({
     telefono:{type:String,maxlength:25}
 });
 
+adminSchema.methods.toJSON = function()
+{
+    const {__v,password,_id,status,...admin} = this.toObject();
+    admin.uid = _id;
+    return admin;
+};
+
+
 module.exports = model('admin',adminSchema);

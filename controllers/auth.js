@@ -19,13 +19,12 @@ const controllerPost = async(req=request,res=response)=>
                     return res.status(400).json({
                         msg:"Error Usuario/Contrasena - contra incorrecta"
                     });
-                    const token = await generarJWT(usuario.id);
+                }
+                const token = await generarJWT(scholar._id);
                     res.json({
                     msg:'Login ok!',
-                    scholar,
                     token
                            });
-                }
             }
         }
         else
@@ -34,21 +33,20 @@ const controllerPost = async(req=request,res=response)=>
             if(!admin)
             {
                 return res.status(400).json({
-                    msg:"Error Usuario/Contrasena"
+                    msg:"Error Usuario/Contrasena (Admin)"
                 });
             }
             const validPassword = bcryptjs.compareSync(password,admin.password);
             if(!validPassword)
             {
             return res.status(400).json({
-            msg:"Error Usuario/Contrasena - contra incorrecta"
+            msg:"Error Usuario/Contrasena - contra incorrecta (Admin)"
             }); 
             }
 
-            const token = await generarJWT(usuario.id);
+            const token = await generarJWT(admin._id);
                     res.json({
                     msg:'Login ok!',
-                    scholar,
                     token
                            });
 

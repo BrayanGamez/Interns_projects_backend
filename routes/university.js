@@ -1,6 +1,8 @@
 const {Router} = require('express');
 const {check} = require('express-validator');
 const router = Router();
+const esAdminRole = require('../middlewares/validate-rol');
+const {validarJWT} = require('../middlewares/validar-jwt');
 const {validarCampos} = require('../middlewares/validateFields');
 const {
     controllerGet,
@@ -12,15 +14,18 @@ const {EmptyFieldsUniversities,universityExist} = require('../helpers/validators
 
 router.get('/',controllerGet);
 
-router.post('/',[...EmptyFieldsUniversities,validarCampos],controllerPost);
+router.post('/',[validarJWT,
+    esAdminRole,...EmptyFieldsUniversities,validarCampos],controllerPost);
 
-router.put('/:id',[
+router.put('/:id',[validarJWT,
+    esAdminRole,
     ...EmptyFieldsUniversities,
     check('id','No es un id de mongo').isMongoId(),
     check('id').custom(universityExist)
 ],validarCampos,controllerPut);
 
-router.delete('/:id',[
+router.delete('/:id',[validarJWT,
+    esAdminRole,
     check('id','No es un id de mongo').isMongoId(),
     check('id').custom(universityExist)
 ]

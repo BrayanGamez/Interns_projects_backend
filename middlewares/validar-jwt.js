@@ -14,9 +14,9 @@ const validarJWT = async(req=request,res=response,next)=>
     }
 
     try {
-      const {_id} =  jwt.verify(token,process.env.SECRETPRIVATEKEY);
-      const scholar = await Scholar.findById(_id);
-      const admin = await Admin.findById(_id);
+      const {uid} =  jwt.verify(token,process.env.SECRETPRIVATEKEY);
+      const scholar = await Scholar.findById(uid);
+      const admin = await Admin.findById(uid);
 
       if(!scholar&&!admin)
       {
@@ -25,11 +25,24 @@ const validarJWT = async(req=request,res=response,next)=>
         })
       }
 
-      if(!scholar.status&&!admin.status)
+      if(!scholar)
       {
-          return res.status(401).json({
-              msg:'Token no valido - Usuario no disponible'
-          })
+          if(!admin.status)
+          {
+            return res.status(401).json({
+                msg:'Token no valido - Usuario no disponible'
+            })
+          }
+      }
+
+      if(!admin)
+      {
+          if(!scholar.status)
+          {
+            return res.status(401).json({
+                msg:'Token no valido - Usuario no disponible'
+            })
+          }
       }
       
       if(!scholar)

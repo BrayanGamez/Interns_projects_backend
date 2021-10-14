@@ -9,4 +9,12 @@ const careerScheme = new Schema({
     idUniversidad:Mongoose.Types.ObjectId
 });
 
+careerScheme.methods.toJSON = function()
+{
+    const {__v,password,_id,status,...career} = this.toObject();
+    career.uid = _id;
+    return career;
+};
+
+
 module.exports = new model('Career',careerScheme);

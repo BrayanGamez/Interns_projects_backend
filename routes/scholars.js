@@ -24,11 +24,15 @@ check('edad').custom(ageRange)
 ],validarCampos,controllerPost)
 
 router.put('/:id',[
+    validarJWT,
+esAdminRole,
     check('id','No es un id de mongo').isMongoId(),
     check('id').custom(userExist)
 ],validarCampos,controllerPut)
 
 router.delete('/:id',[
+    validarJWT,
+esAdminRole,
     check('id','No es id de mongo').isMongoId(),
     check('id').custom(userExist)
 ],validarCampos,controllerDelete)

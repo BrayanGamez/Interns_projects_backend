@@ -19,4 +19,11 @@ const scholarSchema = new Schema(
     }
 )
 
+scholarSchema.methods.toJSON = function()
+{
+    const {__v,password,_id,status,...scholar} = this.toObject();
+    scholar.uid = _id;
+    return scholar;
+};
+
 module.exports = new model("scholars",scholarSchema);

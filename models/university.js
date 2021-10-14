@@ -8,4 +8,12 @@ const universitySchema = new Schema({
     status:{type:Boolean,default:true}
 });
 
+universitySchema.methods.toJSON = function()
+{
+    const {__v,password,_id,status,...university} = this.toObject();
+    university.uid = _id;
+    return university;
+};
+
+
 module.exports = new model('universities',universitySchema);

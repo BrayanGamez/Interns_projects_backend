@@ -9,11 +9,11 @@ const esAdminRole = (req=request,res=response,next)=>
     }
 
     const {rol,nombre} = req.usuario;
-    if (rol!=='ADMIN') 
+    if (rol!=='Admin') 
     {
         res.status(401).json(
             {
-                msg:'${nombre} no tiene permisos de administrador'
+                msg:`${nombre} no tiene permisos de administrador`
             }
         )    
     }
