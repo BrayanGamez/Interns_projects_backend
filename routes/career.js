@@ -9,11 +9,14 @@ const {EmptyFieldsCarees,isUrlValidate} = require('../helpers/validatorsFields')
 
 router.get('/',controllerGet);
 
-router.post('/',controllerPost);
+router.post('/',[validarJWT,
+    esAdminRole,],validarCampos,controllerPost);
 
-router.put('/:id',[
+router.put('/:id',[validarJWT,
+    esAdminRole,
     check('id','El id especificado no id de mongo').isMongoId()],validarCampos,controllerPut);
 
-router.delete('/:id',[check('id','El id especificado no id de mongo').isMongoId()],validarCampos,controllerDelete);
+router.delete('/:id',[validarJWT,
+    esAdminRole,check('id','El id especificado no id de mongo').isMongoId()],validarCampos,controllerDelete);
 
 module.exports = router;

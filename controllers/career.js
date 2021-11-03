@@ -9,7 +9,10 @@ const controllerGet = async(req=request,res=response)=>
 
     const [Total,Careers] =  await Promise.all([
         Career.countDocuments(queryCareerTrue),
-        Career.find(queryCareerTrue).skip(Number(desde)).limit(Number(limite))   
+        Career.find(queryCareerTrue)
+        .populate({path:'idUniversidad',select:'nombre'})
+        .skip(Number(desde))
+        .limit(Number(limite))   
     ]);
 
     res.json({Total,Careers});

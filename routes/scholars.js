@@ -10,7 +10,7 @@ const {EmptyFieldsScholars,ageRange,userExist} = require('../helpers/validatorsF
 const {validarCampos}= require('../middlewares/validateFields');
 const esAdminRole = require('../middlewares/validate-rol');
 const {validarJWT} = require('../middlewares/validar-jwt');
-
+//Obtener lista de estudiantes
 router.get('/',[
     check('desde').isNumeric(),
     check('limite').isNumeric()

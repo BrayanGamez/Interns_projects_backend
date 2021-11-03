@@ -9,12 +9,15 @@ class Server
     {
         this.app = express();
         this.port = process.env.PORT;
-        this.pathAuth = '/api/auth';
-        this.pathScholars = '/api/scholars';
-        this.pathUniversities = '/api/universities';
-        this.pathCareers = '/api/careers';
-        this.pathAuth = '/api/auth';
-        this.pathAdmin = '/api/admin';
+        this.paths = {
+            Auth:'/api/auth',
+            Admin : '/api/admin',
+            Assignature : '/api/assignatures',
+            Careers :'/api/careers',
+            Scholars :'/api/scholars',
+            Searches :'/api/search',
+            Universities : '/api/universities'
+        }
 
         this.dbconecction();
         this.middlewares();
@@ -38,11 +41,13 @@ class Server
 
     routes()
     {
-        this.app.use(this.pathAuth,require('../routes/auth')); 
-        this.app.use(this.pathScholars,require('../routes/scholars'));
-        this.app.use(this.pathUniversities,require('../routes/university'));
-        this.app.use(this.pathCareers,require('../routes/career'))
-        this.app.use(this.pathAdmin,require('../routes/admins'));
+        this.app.use(this.paths.Auth,require('../routes/auth')); 
+        this.app.use(this.paths.Scholars,require('../routes/scholars'));
+        this.app.use(this.paths.Universities,require('../routes/university'));
+        this.app.use(this.paths.Careers,require('../routes/career'))
+        this.app.use(this.paths.Admin,require('../routes/admins'));
+        this.app.use(this.paths.Assignature,require('../routes/assignatures'));
+        this.app.use(this.paths.Searches,require('../routes/searches'));
     }
 
     listen()

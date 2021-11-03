@@ -6,7 +6,8 @@ const careerScheme = new Schema({
     pensum:String,//Aca iria una URL a un servidor de archivos que tenga el pdf del pensum
     ciclos:Number,
     status:{type:Boolean,default:true},
-    idUniversidad:Mongoose.Types.ObjectId
+    idUniversidad:{type:Mongoose.Types.ObjectId,
+                   ref:'universities'}
 });
 
 careerScheme.methods.toJSON = function()

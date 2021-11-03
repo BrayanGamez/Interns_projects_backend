@@ -10,7 +10,11 @@ const controllerGet = async(req=request,res=response)=>
 
     const [Total,Scholars] =  await Promise.all([
         Scholar.countDocuments(queryUserTrue),
-        Scholar.find(queryUserTrue).skip(Number(desde)).limit(Number(limite))   
+        Scholar.find(queryUserTrue)
+        .populate({path:'idUniversidad',select:'nombre'})
+        .populate({path:'idCarrera',select:'nombre'})
+        .skip(Number(desde))
+        .limit(Number(limite))   
     ]);
 
     res.json({Total,Scholars});
@@ -63,13 +67,24 @@ const controllerPost = async(req=request,res=response)=>
 const controllerPut = async(req=request,res=response)=>
 {
     const {id} = req.params;
-    const {_id,status,idCarrera,idUniversidad,password,...resto} = req.body;
+    const {_id,status,IdCarrera,IdUniversidad,password,...resto} = req.body;
 
     if(password)
     {
     const salt = bcryptjs.genSaltSync();
     resto.password = bcryptjs.hashSync(password,salt);
     }
+    if(IdCarrera)
+    {
+        const idCarrera = new mongoose.Types.ObjectId(IdCarrera);
+        resto.idCarrera = idCarrera;
+    }
+    if(IdUniversidad)
+    {
+        const idUniversidad = new mongoose.Types.ObjectId(IdUniversidad);
+        resto.idUniversidad = idUniversidad;
+    }
+
     const scholar = await Scholar.findByIdAndUpdate(id,resto);
 
     res.json(scholar)

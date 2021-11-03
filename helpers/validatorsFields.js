@@ -3,6 +3,7 @@ const Scholar = require('../models/scholar');
 const University = require('../models/university');
 const Career = require('../models/career');
 const Admin = require('../models/admin');
+const Assignature = require('../models/assignature');
 
 const ageRange = (edad)=>
 {
@@ -39,6 +40,23 @@ check('correo','Campo de correo invalido').not().isEmpty(),
 check('correo','formato de correo invalido').isEmail(),
 check('telefono','numero de telefono supera 20 caracteres').isLength({max:20})];
 
+const assignatureExist = async(id)=>
+{
+    const assignatureExiste = await Assignature.findById(id);
+    if(!assignatureExiste)
+    {
+        throw new Error('No existe la asignatura en la Base de Datos');
+    }
+}
+
+const assignatureExistPost = async(nombre)=>
+{
+    const assignatureExiste = await Assignature.findOne({nombre,status:true});
+    if(assignatureExiste)
+    {
+        throw new Error('ya existe la asignatura en la Base de Datos');
+    }
+}
 
 const userExist = async(id)=>
 {
@@ -82,5 +100,7 @@ module.exports = {
     EmptyFieldsUniversities,
     careerExist,
     universityExist,
-    isUrlValidate
+    isUrlValidate,
+    assignatureExist,
+    assignatureExistPost
 }

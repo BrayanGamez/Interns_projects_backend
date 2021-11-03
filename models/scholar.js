@@ -14,8 +14,10 @@ const scholarSchema = new Schema(
         telefono:String,
         statusBecario:{type:Boolean,default:true},
         status:{type:Boolean,default:true},
-        idCarrera:mongoose.Types.ObjectId,
-        idUniversidad:mongoose.Types.ObjectId
+        idCarrera:{type:mongoose.Types.ObjectId,
+                   ref:'Career'},
+        idUniversidad:{type:mongoose.Types.ObjectId,
+                       ref:'universities'}
     }
 )
 
