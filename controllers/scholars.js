@@ -20,6 +20,13 @@ const controllerGet = async(req=request,res=response)=>
     res.json({Total,Scholars});
 }
 
+const controllerGetId = async(req=request,res=response)=>
+{
+    const person = req.usuario;
+
+    res.json(person);
+}
+
 const controllerPost = async(req=request,res=response)=>
 {
 
@@ -43,12 +50,16 @@ const controllerPost = async(req=request,res=response)=>
 
     const idCarrera = new mongoose.Types.ObjectId(IdCarrera);
     const idUniversidad = new mongoose.Types.ObjectId(IdUniversidad);
+    const dia = fechaNacimiento.substring(0,2);
+    const mes = fechaNacimiento.substring(3,5);
+    const anio = fechaNacimiento.substring(6);
+    const newFecha = `${anio}-${mes}-${dia}`;
     const scholar = new Scholar({nombre,
             apellido,
             carnet,
             password,
             edad,
-            fechaNacimiento,
+            fechaNacimiento:newFecha,
             direccion,
             correo,
             telefono,
@@ -96,4 +107,4 @@ const controllerDelete = async(req=request,res=response)=>
     const scholar = await Scholar.findByIdAndUpdate(id,{status:false});
     res.json(scholar);
 }
-module.exports = {controllerPost,controllerPut,controllerDelete,controllerGet};
+module.exports = {controllerPost,controllerPut,controllerDelete,controllerGet,controllerGetId};

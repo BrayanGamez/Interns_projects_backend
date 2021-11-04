@@ -5,7 +5,8 @@ const {
 controllerPost,
 controllerPut,
 controllerDelete,
-controllerGet} = require('../controllers/scholars');
+controllerGet,
+controllerGetId} = require('../controllers/scholars');
 const {EmptyFieldsScholars,ageRange,userExist} = require('../helpers/validatorsFields')
 const {validarCampos}= require('../middlewares/validateFields');
 const esAdminRole = require('../middlewares/validate-rol');
@@ -16,12 +17,16 @@ router.get('/',[
     check('limite').isNumeric()
 ],validarCampos,controllerGet)
 
+router.get('/log',[validarJWT,validarCampos],controllerGetId)
+
 router.post('/',
 [
 ...EmptyFieldsScholars,validarJWT,
 esAdminRole,
 check('edad').custom(ageRange)
 ],validarCampos,controllerPost)
+
+router.get('/:id',[],);
 
 router.put('/:id',[
     validarJWT,

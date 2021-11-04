@@ -14,6 +14,16 @@ const ageRange = (edad)=>
     return true;
 }
 
+const formatDate = (fecha)=>
+{
+    const exReg = /^(0[1-9]|[1-2]\d|3[01])(\/)(0[1-9]|1[012])\2(\d{4})$/;
+    if(!exReg.test(fecha))
+    {
+        throw new Error('El formato de fecha es incorrecto pruebe con: dd/mm/aaaa');
+    }
+    return true;
+}
+
 const EmptyFieldsScholars = [check('nombre','Campo Nombre vacio').not().isEmpty(),
 check('nombre','30 caracteres maximo').isLength({max:30}),
 check('apellido','campo apellido vacio').not().isEmpty(),
@@ -24,6 +34,7 @@ check('password','La password debe poseer como minimo 6 caracteres').isLength({m
 check('edad','No es numerico').isNumeric(),
 check('edad','campo edad vacio').not().isEmpty(),
 check('fechaNacimiento','campo de fecha nacimiento vacio').not().isEmpty(),
+check('fechaNacimiento').custom(formatDate),
 check('direccion','campo de direccion vacio').not().isEmpty(),
 check('correo','campo de correo vacio').not().isEmpty(),
 check('correo','Formato de correo no valido').isEmail(),

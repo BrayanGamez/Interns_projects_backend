@@ -23,8 +23,11 @@ const scholarSchema = new Schema(
 
 scholarSchema.methods.toJSON = function()
 {
-    const {__v,password,_id,status,...scholar} = this.toObject();
+    const {__v,password,_id,status,fechaNacimiento,...scholar} = this.toObject();
     scholar.uid = _id;
+    const pureDate = new Date(fechaNacimiento);
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    scholar.fechaDeNacimiento = pureDate.toLocaleDateString(undefined,options);
     return scholar;
 };
 
