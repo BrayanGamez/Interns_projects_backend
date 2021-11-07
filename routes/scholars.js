@@ -19,6 +19,7 @@ router.get('/',[
 
 router.get('/log',[validarJWT,validarCampos],controllerGetId)
 
+
 router.post('/',
 [
 ...EmptyFieldsScholars,validarJWT,

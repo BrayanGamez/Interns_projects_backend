@@ -12,6 +12,7 @@ const scholarSchema = new Schema(
         direccion:{type:String,maxlength:50},
         correo:String,
         telefono:String,
+        img:{type:String},
         statusBecario:{type:Boolean,default:true},
         status:{type:Boolean,default:true},
         idCarrera:{type:mongoose.Types.ObjectId,

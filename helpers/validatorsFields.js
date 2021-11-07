@@ -105,6 +105,17 @@ const isUrlValidate = (url)=>
     }
 }
 
+const colectionVerify = (coleccion='',colecciones=[])=>
+{
+    const incluida = colecciones.includes(coleccion);
+    if(!incluida)
+    {
+        throw new Error(`La coleccion ${coleccion} no es permitida, ${colecciones}`);
+    }
+
+    return true;
+}
+
 module.exports = {
     EmptyFieldsScholars,
     ageRange,userExist,
@@ -113,5 +124,7 @@ module.exports = {
     universityExist,
     isUrlValidate,
     assignatureExist,
-    assignatureExistPost
+    assignatureExistPost,
+    colectionVerify,
+    formatDate
 }

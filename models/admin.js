@@ -7,6 +7,7 @@ const adminSchema = new Schema({
     apellido:String,
     rol:{type:String,default:'Admin'},
     status:{type:Boolean,default:true},
+    img:{type:String},
     correo:{type:String,maxlength:30,unique:true},
     telefono:{type:String,maxlength:25}
 });

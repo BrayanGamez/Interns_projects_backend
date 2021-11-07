@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 const {dbConnection}=require('../database/config');
 
 
@@ -16,7 +17,9 @@ class Server
             Careers :'/api/careers',
             Scholars :'/api/scholars',
             Searches :'/api/search',
-            Universities : '/api/universities'
+            Universities : '/api/universities',
+            Uploads:'/api/uploads',
+            Reception:'/api/receptions'
         }
 
         this.dbconecction();
@@ -35,7 +38,15 @@ class Server
         this.app.use(cors({origin:'*'}));
         //Lectura y parseo
         this.app.use(express.json());
+        //Establecer la pagina por defecto
         this.app.use(express.static('public'));
+        //FileUpload-Carga de archivos
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath:true
+        }));
+        
     }
 
 
@@ -48,6 +59,8 @@ class Server
         this.app.use(this.paths.Admin,require('../routes/admins'));
         this.app.use(this.paths.Assignature,require('../routes/assignatures'));
         this.app.use(this.paths.Searches,require('../routes/searches'));
+        this.app.use(this.paths.Uploads,require('../routes/uploads'));
+        this.app.use(this.paths.Reception,require('../routes/reception'));
     }
 
     listen()

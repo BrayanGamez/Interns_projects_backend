@@ -22,10 +22,15 @@ const controllerGet = async(req=request,res=response)=>
 
 const controllerGetId = async(req=request,res=response)=>
 {
-    const person = req.usuario;
+    const user = req.usuario;
+    if(!user.img)
+    {
+         user.img = `https://rest-server-dps-api.herokuapp.com/api/uploads/imgNotFound`;
+    }
 
-    res.json(person);
+    res.json(user);
 }
+
 
 const controllerPost = async(req=request,res=response)=>
 {
@@ -78,7 +83,7 @@ const controllerPost = async(req=request,res=response)=>
 const controllerPut = async(req=request,res=response)=>
 {
     const {id} = req.params;
-    const {_id,status,IdCarrera,IdUniversidad,password,...resto} = req.body;
+    const {_id,status,IdCarrera,IdUniversidad,fechaNacimiento,password,...resto} = req.body;
 
     if(password)
     {
@@ -95,7 +100,14 @@ const controllerPut = async(req=request,res=response)=>
         const idUniversidad = new mongoose.Types.ObjectId(IdUniversidad);
         resto.idUniversidad = idUniversidad;
     }
-
+    if(fechaNacimiento)
+    {
+    const dia = fechaNacimiento.substring(0,2);
+    const mes = fechaNacimiento.substring(3,5);
+    const anio = fechaNacimiento.substring(6);
+    const newFecha = `${anio}-${mes}-${dia}`;
+    resto.fechaNacimiento = newFecha;
+    }
     const scholar = await Scholar.findByIdAndUpdate(id,resto);
 
     res.json(scholar)
@@ -107,4 +119,9 @@ const controllerDelete = async(req=request,res=response)=>
     const scholar = await Scholar.findByIdAndUpdate(id,{status:false});
     res.json(scholar);
 }
-module.exports = {controllerPost,controllerPut,controllerDelete,controllerGet,controllerGetId};
+module.exports = {
+    controllerPost,
+    controllerPut,
+    controllerDelete,
+    controllerGet,
+    controllerGetId};
